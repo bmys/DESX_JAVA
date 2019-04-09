@@ -36,6 +36,11 @@ public class Des {
             41, 52, 31, 37, 47, 55, 30, 40, 51, 45, 33, 48,
             44, 49, 39, 56, 34, 53, 46, 42, 50, 36, 29, 32};
 
+    private byte[] pBlockPermutationTable = {
+            16, 7, 20, 21, 29, 12, 28, 17, 1, 15, 23, 26, 5, 18, 31, 10,
+            2, 8, 24, 14, 32, 27, 3, 9, 19, 13, 30, 6, 22, 11, 4, 25
+    };
+
     // Constructor
     public Des(byte[] key) {
         this.key = key;
@@ -51,14 +56,14 @@ public class Des {
 
         for (int round = 0; round < 16; round++) {
             key = keyTransformation(key, round);
-            cipher = round(cipher);
+            cipher = round(cipher, key);
         }
 
         return finalPermutation(cipher);
     }
 
-    public String decrypt(String bits){
-        return "d";
+    public byte[] decrypt(String bits){
+        return new byte[1];
     }
 
     // private methods
@@ -66,8 +71,10 @@ public class Des {
         return Utility.swapArrayElements(bits, initialPermutationTable);
     }
 
-    private byte[] round(byte[] bits){
-        return new byte[1];
+    private byte[] round(byte[] bits, byte[] key){
+        byte[] pBlocks = FFunction.fun(bits, key);
+
+        return Utility.swapArrayElements(pBlocks, pBlockPermutationTable);
     }
 
     // round methods
