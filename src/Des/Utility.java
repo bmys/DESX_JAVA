@@ -1,5 +1,7 @@
 package Des;
 
+import java.util.Arrays;
+
 public class Utility {
     public static byte[] swapArrayElements(byte[] arr, byte[] indexesArr){
         byte[] swappedArr = new byte[indexesArr.length];
@@ -49,6 +51,31 @@ public class Utility {
         return returnArr;
     }
 
+    public static byte[][] splitArrayInEigth(byte[] arr){
+        byte[][] newArr = new byte[8][6];
+
+        for (int i = 0; i < 8; i++) {
+            newArr[i] = Arrays.copyOfRange(arr, i*8, i*8+6);
+        }
+        return newArr;
+    }
+
+//    public static byte[][] splitArrayInEigth(byte[] arr){
+//       byte[][] newArr = new byte[8][6];
+//
+//        for (int i = 0; i < 8; i++) {
+//            byte[] iterArr = new byte[6];
+//
+//            for (int j = 0; j < 6; j++) {
+//                int idx = i*5+j;
+//                iterArr[j] = arr[idx];
+//            }
+//
+//            newArr[i] = iterArr;
+//        }
+//       return newArr;
+//    }
+
     public static byte[] shiftArray(byte[] arr, int num){
         return arr;
     }
@@ -75,13 +102,19 @@ public class Utility {
         return sum;
     }
 
-    public static int toByteArray(byte[] arr){
-        int sum = 0;
-        int counter = 1;
-        for (int i = arr.length-1; i != -1  ; i--) {
-            sum += arr[i] * counter;
-            counter *= 2;
+    public static byte[] toByteArray(int k){
+        byte[] arr = new byte[4];
+
+        int counter = 8;
+
+        for (int i = 0; i < 4; i++) {
+            if(k >= counter) {
+                arr[i] = 1;
+                k -= counter;
+            }
+            counter /= 2;
         }
-        return sum;
+
+        return arr;
     }
 }

@@ -1,7 +1,9 @@
 package Des;
 
+import java.lang.reflect.UndeclaredThrowableException;
+
 public class SBlock {
-    private byte[][][] sBlocks = {
+    private static byte[][][] sBlocks = {
             {
                     {0, 14, 4, 13, 1, 2, 15, 11, 8, 3, 10, 6, 12, 5, 9, 0, 7},
                     {1, 0, 15, 7, 4, 14, 2, 13, 1, 10, 6, 12, 11, 9, 5, 3, 8},
@@ -57,6 +59,18 @@ public class SBlock {
                     {3, 2, 1, 14, 7, 4, 10, 8, 13, 15, 12, 9, 0, 3, 5, 6, 11}
             }
     };
+
+    public static byte[] get(int sBlockNumber, byte[] bits){
+        byte[] rowBits = new byte[2];
+        byte[] columnBits = new byte[4];
+
+        int row = Utility.toInt(rowBits);
+        int col = Utility.toInt(columnBits);
+
+        int valueFromTable = sBlocks[sBlockNumber][row][col];
+
+        return Utility.toByteArray(valueFromTable);
+    }
 
 
 }
