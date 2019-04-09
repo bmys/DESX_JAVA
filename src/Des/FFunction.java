@@ -9,10 +9,14 @@ public class FFunction {
             16, 17, 18, 19, 20, 21, 20, 21, 22, 23, 24, 25,
             24, 25, 26, 27, 28, 29, 28, 29, 30, 31, 32,  1};
 
+
     public byte[] fun(byte[] bytes, byte[] key){
+        byte[][] splitArr = Utility.splitArrayInHalf(bytes);
+
+        byte[] rSide = splitArr[1];
 
         // length 48 from 32 bits bytes array
-        byte[] extendedArray = Utility.swapArrayElements(bytes, extensionPermutationTable);
+        byte[] extendedArray = Utility.swapArrayElements(rSide, extensionPermutationTable);
 
         byte[] xorArray = Utility.xorArrays(extendedArray, key);
 

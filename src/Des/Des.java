@@ -1,6 +1,5 @@
 package Des;
 
-import javax.rmi.CORBA.Util;
 
 public class Des {
 
@@ -86,21 +85,21 @@ public class Des {
         return newKey;
     }
 
-
-    private String sBoxSubstitution(String bits){
-        return "";
-    }
-
-    private String pBoxSubstitution(String bits){
-        return "";
-    }
-
-    private String xorAndSwap(String bits){
-        return "";
-    }
-
     private byte[] finalPermutation(byte[] bits){
         return Utility.swapArrayElements(bits, finalPermutationTable);
     }
+
+    //        return "";
+//    private String sBoxSubstitution(String bits){
+
+//    }
+    //        return "";
+//    private String pBoxSubstitution(String bits){
+
+//    }
+    //        return "";
+//    private String xorAndSwap(String bits){
+
+//    }
 
 }
