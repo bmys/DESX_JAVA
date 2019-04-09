@@ -77,6 +77,11 @@ public class Utility {
 //    }
 
     public static byte[] shiftArray(byte[] arr, int num){
+
+        for (int i = 0; i < num; i++) {
+            System.arraycopy(arr,1,arr,0,arr.length-1);
+            arr[arr.length-1] = 0;
+        }
         return arr;
     }
 
