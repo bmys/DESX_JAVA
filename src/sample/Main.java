@@ -25,15 +25,15 @@ public class Main {
 //         UtilityTest.runTest();
 
         byte[] key =
-                       {0, 1, 0, 1, 0, 1, 0, 1,
-                        0, 0, 0, 1, 0, 1, 0, 1,
-                        0, 1, 0, 1, 0, 1, 0, 1,
+                       {0, 1, 0, 0, 0, 0, 0, 1,
+                        0, 0, 0, 1, 0, 1, 0, 0,
+                        0, 1, 0, 0, 0, 0, 0, 1,
                         0, 0, 0, 1, 0, 1, 0, 1,
 
-                        0, 1, 0, 1, 0, 1, 0, 1,
-                        0, 1, 0, 1, 0, 0, 0, 1,
                         0, 1, 0, 0, 0, 1, 0, 1,
-                        0, 1, 0, 1, 0, 1, 1, 1,};
+                        0, 0, 0, 1, 0, 0, 0, 0,
+                        0, 1, 0, 0, 0, 1, 0, 1,
+                        0, 0, 0, 1, 0, 0, 1, 0,};
 
 //        byte[] msg =
 //                       {1, 1, 0, 1, 1, 0, 1, 1,
@@ -46,13 +46,13 @@ public class Main {
 //                        1, 1, 1, 1, 0, 1, 0, 1,
 //                        0, 0, 0, 1, 0, 1, 0, 1,};
                 byte[] msg =
-                       {0,1,1,0,1,0,0,0,
+                        {0,1,1,0,1,0,0,0,
                                0,1,1,0,0,1,0,1,
-                               0,1,1,0,1,1,0,0,
-                               0,1,1,0,1,1,0,0,
+                               0,1,0,0,1,1,0,0,
+                               0,0,1,0,1,1,0,0,
 
-                               0,1,1,0,1,1,1,1,
-                               0,0,1,0,0,0,0,0,
+                               0,1,1,0,1,1,0,1,
+                               0,0,1,0,0,1,0,0,
                                0,0,1,1,1,0,1,0,
                                0,0,1,0,1,0,0,1,};
 //        byte[] msg =
@@ -67,19 +67,22 @@ public class Main {
 //                        57, 58, 59, 60, 61, 62, 63, 64,};
 
 
-        Des.Des des = new Des.Des(key);
+        Des.Des des = new Des.Des();
+        System.out.println("MSG:");
+        printArr(msg);
 
-        int c = 0;
-        for (byte el : des.encrypt(msg, key)) {
-            System.out.print(el);
-            System.out.print(' ');
-            if (c == 7) {
-                System.out.println();
-                c = 0;
-            } else {
-                c++;
-            }
-        }
+        byte [] encrypted = des.encrypt(msg, key);
+        System.out.println("ENCRYPTED:");
+        printArr(encrypted);
+
+
+        byte [] decrypted = des.encrypt(encrypted, key);
+        System.out.println("DECRYPTED:");
+        printArr(decrypted);
+
+        // byte [] decrypted = des.encrypt(encrypted, key);
+
+
 
 
 //
@@ -103,5 +106,22 @@ public class Main {
 
 
 //        launch(args);
+    }
+
+    public static void printArr(byte[]arr){
+        int c = 0;
+        for (byte el : arr) {
+            System.out.print(el);
+            System.out.print(' ');
+            if (c == 7) {
+                System.out.println();
+                c = 0;
+            } else {
+                c++;
+            }
+        }
+        System.out.println();
+        System.out.println();
+        System.out.println();
     }
 }

@@ -88,10 +88,11 @@ public class Utility {
 //    }
 
     public static byte[] shiftArray(byte[] arr, int num){
-
+// Circular shift
+        byte firstByte = arr[0];
         for (int i = 0; i < num; i++) {
             System.arraycopy(arr,1,arr,0,arr.length-1);
-            arr[arr.length-1] = 0;
+            arr[arr.length-1] = firstByte;
         }
         return arr;
     }
