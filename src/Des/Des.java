@@ -47,7 +47,8 @@ public class Des {
         //key = Utility.prepareKey(key);
         key = Utility.swapArrayElements(key, keyPermutationTable);
 
-        byte[] cipher = initialPermutation(bits);
+        byte[] cipher = Utility.swapArrayElements(bits, initialPermutationTable);
+
         byte[][] spltArr = Utility.splitArrayInHalf(cipher);
 
         byte[] leftSide = spltArr[0];
@@ -71,11 +72,6 @@ public class Des {
 
     public byte[] decrypt(String bits){
         return new byte[1];
-    }
-
-    // private methods
-    private byte[] initialPermutation(byte[] bits){
-        return Utility.swapArrayElements(bits, initialPermutationTable);
     }
 
     // round methods

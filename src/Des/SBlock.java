@@ -64,6 +64,11 @@ public class SBlock {
         byte[] rowBits = new byte[2];
         byte[] columnBits = new byte[4];
 
+        rowBits[0] = bits[0];
+        rowBits[1] = bits[5];
+
+        System.arraycopy(bits, 1, columnBits, 0, 4);
+
         int row = Utility.toInt(rowBits);
         int col = Utility.toInt(columnBits);
 
