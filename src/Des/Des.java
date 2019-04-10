@@ -53,10 +53,15 @@ public class Des {
         key = Utility.swapArrayElements(key, keyPermutationTable);
 
         byte[] cipher = initialPermutation(bits);
+        byte[][] spltArr = Utility.splitArrayInHalf(cipher);
+
+        byte[] leftSide = spltArr[0];
+        byte[] rigthSide = spltArr[1];
 
         for (int round = 0; round < 16; round++) {
             key = keyTransformation(key, round);
             cipher = round(cipher, key);
+
         }
 
         return finalPermutation(cipher);

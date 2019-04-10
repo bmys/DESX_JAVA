@@ -13,10 +13,10 @@ public class FFunction {
             24, 25, 26, 27, 28, 29, 28, 29, 30, 31, 32,  1};
 
 
-    public static byte[] fun(byte[] bytes, byte[] key){
-        byte[][] splitArr = Utility.splitArrayInHalf(bytes);
+    public static byte[] fun(byte[] rSide, byte[] key){
+//        byte[][] splitArr = Utility.splitArrayInHalf(bytes);
 
-        byte[] rSide = splitArr[1];
+//        byte[] rSide = splitArr[1];
 
         // length 48 from 32 bits bytes array
         byte[] extendedArray = Utility.swapArrayElements(rSide, extensionPermutationTable);
