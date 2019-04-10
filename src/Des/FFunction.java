@@ -28,7 +28,18 @@ public class FFunction {
 
         byte[] xorArray = Utility.xorArrays(extendedArray, key);
 
-        byte[][] sBoxes = Utility.splitArrayInEigth(xorArray);
+        byte[] product = sBox(xorArray);
+
+        // p-blocks
+        return Utility.swapArrayElements(product, pBlockPermutationTable);
+    }
+
+    public static byte[] extension(byte[] bytes){
+        return Utility.swapArrayElements(bytes, extensionPermutationTable);
+    }
+
+    public static byte[] sBox(byte[] bytes){
+        byte[][] sBoxes = Utility.splitArrayInEigth(bytes);
 
         List<Byte> concatenatedSBox = new ArrayList<>();
         byte[] product = new byte[32];
@@ -43,8 +54,6 @@ public class FFunction {
         for (int i = 0; i < 32; i++) {
             product[i] = concatenatedSBox.get(i);
         }
-
-        // p-blocks
-        return Utility.swapArrayElements(product, pBlockPermutationTable);
+        return product;
     }
 }

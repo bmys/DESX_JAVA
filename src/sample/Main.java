@@ -1,5 +1,7 @@
 package sample;
 
+import Des.FFunction;
+import Des.SBlock;
 import Des.Utility;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -147,6 +149,34 @@ public class Main {
         byte[] compressed = Des.Des.KeyCompression(catArr);
         System.out.println(Arrays.equals(strToArr("100011111110011010110000011111010011100100010000"),
                 compressed));
+////////////////////////////////////////////////////////////////////////////////////////
+        System.out.println("\nExtension test");
+        byte[] ext = FFunction.extension(strToArr("10000010100111011101001110101100"));
+        System.out.println(Arrays.equals(strToArr("010000000101010011111011111010100111110101011001"),
+                ext));
+////////////////////////////////////////////////////////////////////////////////////////
+System.out.println("\nSBox test");
+
+System.out.println(Arrays.equals(strToArr("1001"),
+        SBlock.get(0,strToArr("011010"))));
+
+System.out.println(Arrays.equals(strToArr("1100"),
+        SBlock.get(0,strToArr("110010"))));
+
+System.out.println(Arrays.equals(strToArr("1111"),
+        SBlock.get(0,strToArr("000011"))));
+
+////////////////////////////////////////////////////////////////////////////////////////
+        System.out.println("\nXOR test");
+        byte[] xor = Utility.xorArrays(ext, compressed);
+        System.out.println(Arrays.equals(strToArr("110011111011001001001011100101110100010001001001"),
+                xor));
+////////////////////////////////////////////////////////////////////////////////////////
+        System.out.println("\nSBox test");
+        byte[] sbox = FFunction.sBox(xor);
+        System.out.println(Arrays.equals(strToArr("10110101001111111100010011101010"),
+                sbox));
+
 
     }
 

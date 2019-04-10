@@ -42,7 +42,6 @@ public class Des {
     public byte[] encrypt(byte[] bits, byte[] key){
 
         //key = Utility.prepareKey(key);
-        key = Utility.swapArrayElements(key, keyPermutationTable);
 
         byte[] cipher = Utility.swapArrayElements(bits, initialPermutationTable);
 
@@ -51,6 +50,8 @@ public class Des {
         byte[] leftSide = spltArr[0];
         byte[] rigthSide = spltArr[1];
         byte[] temp;
+
+        key = Utility.swapArrayElements(key, keyPermutationTable);
 
         for (int round = 0; round < 16; round++) {
             byte [] newKey = keyTransformation(key, round);
@@ -73,6 +74,7 @@ public class Des {
     public static byte[] keyTransformation(byte[] key, int round){
 
         int shift = keyShiftTable[round];
+
 
         byte[][] splittedKey = Utility.splitArrayInHalf(key);
         splittedKey[0] = Utility.shiftArray(splittedKey[0], shift);
