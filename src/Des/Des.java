@@ -44,7 +44,7 @@ public class Des {
     // public methods
     public byte[] encrypt(byte[] bits, byte[] key){
 
-        key = Utility.prepareKey(key);
+        //key = Utility.prepareKey(key);
         key = Utility.swapArrayElements(key, keyPermutationTable);
 
         byte[] cipher = initialPermutation(bits);
@@ -55,9 +55,9 @@ public class Des {
         byte[] temp;
 
         for (int round = 0; round < 16; round++) {
-            key = keyTransformation(key, round);
+            byte [] newKey = keyTransformation(key, round);
 
-            byte[] fFunctionResult = FFunction.fun(rigthSide, key);
+            byte[] fFunctionResult = FFunction.fun(rigthSide, newKey);
 
             temp = leftSide;
             leftSide = rigthSide;

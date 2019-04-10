@@ -7,7 +7,7 @@ public class Utility {
         byte[] swappedArr = new byte[indexesArr.length];
 
         for (int i = 0; i < indexesArr.length; i++) {
-            byte index = indexesArr[i];
+            int index = indexesArr[i]-1;
             swappedArr[i] = arr[index];
         }
 
@@ -36,26 +36,37 @@ public class Utility {
     }
 
     public static byte[][] splitArrayInHalf(byte[] arr){
-        int halfIndex = arr.length / 2;
+        int halfIndex = (arr.length / 2);
 
         byte[][] returnArr = new byte[2][halfIndex];
 
-        byte[] leftArray = new byte[halfIndex];
-        byte[] rigthArray = new byte[halfIndex];
-
-        for (int i = 0; i < halfIndex; i++) {
-            returnArr[0][i] = arr[i];
-            returnArr[1][i+halfIndex] = arr[i+halfIndex];
-        }
+        System.arraycopy(arr, 0,  returnArr[0], 0, arr.length / 2);
+        System.arraycopy(arr, 0,  returnArr[1], 0, arr.length / 2);
 
         return returnArr;
     }
+
+//    public static byte[][] splitArrayInHalf(byte[] arr){
+//        int halfIndex = (arr.length / 2);
+//
+//        byte[][] returnArr = new byte[2][halfIndex];
+//
+//        byte[] leftArray = new byte[halfIndex];
+//        byte[] rigthArray = new byte[halfIndex];
+//
+//        for (int i = 0; i < halfIndex; i++) {
+//            returnArr[0][i] = arr[i];
+//            returnArr[1][i] = arr[i+halfIndex];
+//        }
+//
+//        return returnArr;
+//    }
 
     public static byte[][] splitArrayInEigth(byte[] arr){
         byte[][] newArr = new byte[8][6];
 
         for (int i = 0; i < 8; i++) {
-            newArr[i] = Arrays.copyOfRange(arr, i*8, i*8+6);
+            newArr[i] = Arrays.copyOfRange(arr, i*6, i*6+6);
         }
         return newArr;
     }
