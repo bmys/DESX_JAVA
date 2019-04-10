@@ -41,7 +41,7 @@ public class Utility {
         byte[][] returnArr = new byte[2][halfIndex];
 
         System.arraycopy(arr, 0,  returnArr[0], 0, arr.length / 2);
-        System.arraycopy(arr, 0,  returnArr[1], 0, arr.length / 2);
+        System.arraycopy(arr, arr.length / 2,  returnArr[1], 0, arr.length / 2);
 
         return returnArr;
     }
