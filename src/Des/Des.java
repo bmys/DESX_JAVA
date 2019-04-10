@@ -55,7 +55,9 @@ public class Des {
         for (int round = 0; round < 16; round++) {
             byte [] newKey = keyTransformation(key, round);
 
-            byte[] fFunctionResult = FFunction.fun(rigthSide, newKey);
+            byte[] compressedKey = KeyCompression(newKey);
+
+            byte[] fFunctionResult = FFunction.fun(rigthSide, compressedKey);
 
             temp = leftSide;
             leftSide = rigthSide;
@@ -77,10 +79,9 @@ public class Des {
         splittedKey[1] = Utility.shiftArray(splittedKey[1], shift);
 
         byte[] newKey = Utility.catArrays(splittedKey[0], splittedKey[1]);
-        newKey = Utility.swapArrayElements(newKey, compressionPermutationTable);
-
         return newKey;
     }
+
     public static byte[] initialPermutation(byte[] bits){
         return Utility.swapArrayElements(bits, initialPermutationTable);
     }
