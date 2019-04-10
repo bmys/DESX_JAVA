@@ -70,8 +70,8 @@ public class Des {
         return finalPermutation(catArrays);
     }
 
-    public byte[] decrypt(String bits){
-        return new byte[1];
+    public byte[] decrypt(byte[] bits, byte[] key){
+        return encrypt(bits, key);
     }
 
     // round methods
