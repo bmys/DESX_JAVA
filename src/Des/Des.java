@@ -53,7 +53,7 @@ public class Des {
 
         key = Utility.swapArrayElements(key, keyPermutationTable);
 
-        for (int round = 0; round < 16; round++) {
+        for (int round = 0; round < 1; round++) {
             byte [] newKey = keyTransformation(key, round, decrypt);
 
             byte[] compressedKey = KeyCompression(newKey);
@@ -67,7 +67,8 @@ public class Des {
 
         byte[] catArrays = Utility.catArrays(leftSide, rigthSide);
 
-        return finalPermutation(catArrays);
+        return catArrays;
+//        return finalPermutation(catArrays);
     }
 
     // round methods
@@ -91,6 +92,10 @@ public class Des {
         byte[] newKey = Utility.catArrays(splittedKey[0], splittedKey[1]);
         return newKey;
     }
+
+//    public static byte[] round(byte[] bytes){
+//
+//    }
 
     public static byte[] initialPermutation(byte[] bits){
         return Utility.swapArrayElements(bits, initialPermutationTable);

@@ -72,22 +72,22 @@ public class Main {
 //                        57, 58, 59, 60, 61, 62, 63, 64,};
 
 
-
-        Des.Des des = new Des.Des();
-        System.out.println("MSG:");
-        printArr(msg);
-
-        byte [] encrypted = des.encrypt(msg, key, false);
-        System.out.println("ENCRYPTED:");
-        printArr(encrypted);
-
-
-        byte [] decrypted = des.encrypt(encrypted, key, true);
-        System.out.println("DECRYPTED:");
-        printArr(decrypted);
-
-        // byte [] decrypted = des.encrypt(encrypted, key);
-
+// main
+            //        Des.Des des = new Des.Des();
+            //        System.out.println("MSG:");
+            //        printArr(msg);
+            //
+            //        byte [] encrypted = des.encrypt(msg, key, false);
+            //        System.out.println("ENCRYPTED:");
+            //        printArr(encrypted);
+            //
+            //
+            //        byte [] decrypted = des.encrypt(encrypted, key, true);
+            //        System.out.println("DECRYPTED:");
+            //        printArr(decrypted);
+            //
+            //        // byte [] decrypted = des.encrypt(encrypted, key);
+            //
 
 
 
@@ -150,6 +150,9 @@ public class Main {
         byte[] compressed = Des.Des.KeyCompression(catArr);
         System.out.println(Arrays.equals(strToArr("100011111110011010110000011111010011100100010000"),
                 compressed));
+
+
+
 ////////////////////////////////////////////////////////////////////////////////////////
         System.out.println("\nExtension test");
         byte[] ext = FFunction.extension(strToArr("10000010100111011101001110101100"));
@@ -183,6 +186,21 @@ System.out.println(Arrays.equals(strToArr("1111"),
         System.out.println(Arrays.equals(strToArr("10001101110101100101011001011111"),
                 pbox));
 
+////////////////////////////////////////////////////////////////////////////////////////
+        System.out.println("\nFFunction test");
+        byte[] ffunction = FFunction.fun(strToArr("10000010100111011101001110101100"), compressed);
+        System.out.println(Arrays.equals(strToArr("10001101110101100101011001011111"),
+                ffunction));
+////////////////////////////////////////////////////////////////////////////////////////
+        System.out.println("\nFirst round test");
+
+        Des.Des des = new Des.Des();
+
+        byte [] encrypted = des.encrypt(strToArr("0010100111011000001000110011011100111100010101100100100111111011"),
+                strToArr("1101000111010100101000110101110010101010000100011101010010101010"), false);
+
+        System.out.println(Arrays.equals(strToArr("1000001010011101110100111010110001101111011011000110111010010010"),
+                encrypted));
 
     }
 
