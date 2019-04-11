@@ -72,16 +72,17 @@ public class Main {
 //                        57, 58, 59, 60, 61, 62, 63, 64,};
 
 
+
         Des.Des des = new Des.Des();
         System.out.println("MSG:");
         printArr(msg);
 
-        byte [] encrypted = des.encrypt(msg, key);
+        byte [] encrypted = des.encrypt(msg, key, false);
         System.out.println("ENCRYPTED:");
         printArr(encrypted);
 
 
-        byte [] decrypted = des.encrypt(encrypted, key);
+        byte [] decrypted = des.encrypt(encrypted, key, true);
         System.out.println("DECRYPTED:");
         printArr(decrypted);
 
@@ -176,6 +177,11 @@ System.out.println(Arrays.equals(strToArr("1111"),
         byte[] sbox = FFunction.sBox(xor);
         System.out.println(Arrays.equals(strToArr("10110101001111111100010011101010"),
                 sbox));
+////////////////////////////////////////////////////////////////////////////////////////
+        System.out.println("\nPBox test");
+        byte[] pbox = FFunction.pBox(sbox);
+        System.out.println(Arrays.equals(strToArr("10001101110101100101011001011111"),
+                pbox));
 
 
     }
