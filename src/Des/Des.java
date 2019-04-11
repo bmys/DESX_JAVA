@@ -39,7 +39,7 @@ public class Des {
     // Constructor
 
     // public methods
-    public byte[] encrypt(byte[] bits, byte[] key){
+    public byte[] encrypt(byte[] bits, byte[] key, boolean decrypt){
 
         //key = Utility.prepareKey(key);
 
@@ -54,7 +54,7 @@ public class Des {
         key = Utility.swapArrayElements(key, keyPermutationTable);
 
         for (int round = 0; round < 16; round++) {
-            byte [] newKey = keyTransformation(key, round);
+            byte [] newKey = keyTransformation(key, round, decrypt);
 
             byte[] compressedKey = KeyCompression(newKey);
 
@@ -71,9 +71,17 @@ public class Des {
     }
 
     // round methods
-    public static byte[] keyTransformation(byte[] key, int round){
+    public static byte[] keyTransformation(byte[] key, int round, boolean decrypt){
+        int shift;
 
-        int shift = keyShiftTable[round];
+        if(decrypt){
+            shift = keyShiftTable[15-round];
+
+        }
+        else{
+            shift = keyShiftTable[round];
+        }
+
 
 
         byte[][] splittedKey = Utility.splitArrayInHalf(key);

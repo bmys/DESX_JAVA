@@ -31,7 +31,7 @@ public class FFunction {
         byte[] product = sBox(xorArray);
 
         // p-blocks
-        return Utility.swapArrayElements(product, pBlockPermutationTable);
+        return pBox(product);
     }
 
     public static byte[] extension(byte[] bytes){
@@ -55,5 +55,9 @@ public class FFunction {
             product[i] = concatenatedSBox.get(i);
         }
         return product;
+    }
+
+    public static byte[] pBox(byte[] bytes){
+        return Utility.swapArrayElements(bytes, pBlockPermutationTable);
     }
 }
