@@ -52,9 +52,9 @@ public class Des {
         byte[] temp;
 
         key = Utility.swapArrayElements(key, keyPermutationTable);
-
+        byte[] newKey = key;
         for (int round = 0; round < 1; round++) {
-            byte [] newKey = keyTransformation(key, round, decrypt);
+            newKey = keyTransformation(newKey, round, decrypt);
 
             byte[] compressedKey = KeyCompression(newKey);
 
@@ -67,8 +67,8 @@ public class Des {
 
         byte[] catArrays = Utility.catArrays(leftSide, rigthSide);
 
-        return catArrays;
-//        return finalPermutation(catArrays);
+//        return catArrays;
+        return finalPermutation(catArrays);
     }
 
     // round methods
