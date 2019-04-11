@@ -8,6 +8,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+
 import test.UtilityTest;
 
 import java.util.Arrays;
@@ -51,7 +52,7 @@ public class Main {
 //                        1, 1, 1, 1, 0, 1, 0, 1,
 //                        0, 0, 0, 1, 0, 1, 0, 1,};
                 byte[] msg =
-                        {0,1,1,0,1,0,0,0,
+                              {0,1,1,0,1,0,0,0,
                                0,1,1,0,0,1,0,1,
                                0,1,0,0,1,1,0,0,
                                0,0,1,0,1,1,0,0,
@@ -270,10 +271,27 @@ System.out.println(Arrays.equals(strToArr("1111"),
 
         System.out.println(Arrays.equals(key5,tranformedKey));
 
+        // round 4
+        keyAfterPermutation = strToArr("00001100110010101010111111110101011001100111100011110101");
+        tranformedKey = strToArr("00110011001010101011111111000101100110011110001111010101");
 
+        key5 = Des.Des.keyTransformation(keyAfterPermutation, 3, false);
 
+        System.out.println(Arrays.equals(key5,tranformedKey));
 
+        // round 5
+        keyAfterPermutation = strToArr("00110011001010101011111111000101100110011110001111010101");
+        tranformedKey = strToArr("11001100101010101111111100000110011001111000111101010101");
 
+        key5 = Des.Des.keyTransformation(keyAfterPermutation, 4, false);
+
+        System.out.println(Arrays.equals(key5,tranformedKey));
+
+    ////////////////////////////////////////////////////////
+
+        encrypted1 = des1.encrypt(strToArr(AsciiToBinary("Hello wo")),
+                strToArr(AsciiToBinary("secret_k")), false);
+        System.out.println(arrToStr(encrypted1));
     }
 
     public static void printArr(byte[]arr){
@@ -294,9 +312,11 @@ System.out.println(Arrays.equals(strToArr("1111"),
     }
 
      static byte[] strToArr(String text){
+        text = text.replaceAll("\\s+", "");
        byte[] result = new byte[text.length()];
        int i = 0;
        for (char ch: text.toCharArray()){
+//           if(ch == ' ') continue;
            if(ch == '0'){
                result[i] = 0;
            }
@@ -320,5 +340,22 @@ System.out.println(Arrays.equals(strToArr("1111"),
             }
         }
         return result.toString();
+    }
+
+    public static String AsciiToBinary(String asciiString){
+
+        byte[] bytes = asciiString.getBytes();
+        StringBuilder binary = new StringBuilder();
+        for (byte b : bytes)
+        {
+            int val = b;
+            for (int i = 0; i < 8; i++)
+            {
+                binary.append((val & 128) == 0 ? 0 : 1);
+                val <<= 1;
+            }
+            // binary.append(' ');
+        }
+        return binary.toString();
     }
 }

@@ -67,8 +67,8 @@ public class Des {
 
         byte[] catArrays = Utility.catArrays(leftSide, rigthSide);
 
-//        return catArrays;
-        return finalPermutation(catArrays);
+        return catArrays;
+//        return finalPermutation(catArrays);
     }
 
     // round methods
