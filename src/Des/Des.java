@@ -1,6 +1,10 @@
 package Des;
 
 
+import java.util.Collections;
+import java.util.LinkedList;
+import java.util.List;
+
 public class Des {
 
     private byte[] key;
@@ -39,6 +43,27 @@ public class Des {
     // Constructor
 
     // public methods
+
+    private List<byte[]> subKeys = new LinkedList<>();
+
+    private List<byte[]> generateSubKeys(byte[] key){
+        List<byte[]> subKeys = new LinkedList<>();
+
+        byte[] newKey = key;
+        for (int round = 0; round < 16; round++) {
+            int shift;
+            shift = keyShiftTable[round];
+
+            byte[][] splittedKey = Utility.splitArrayInHalf(newKey);
+            splittedKey[0] = Utility.shiftArray(splittedKey[0], shift);
+            splittedKey[1] = Utility.shiftArray(splittedKey[1], shift);
+
+            newKey = Utility.catArrays(splittedKey[0], splittedKey[1]);
+            subKeys.add(KeyCompression(newKey));
+        }
+        return subKeys;
+    }
+
     public byte[] encrypt(byte[] bits, byte[] key, boolean decrypt){
 
         byte[] cipher = Utility.swapArrayElements(bits, initialPermutationTable);
@@ -50,14 +75,14 @@ public class Des {
         byte[] temp;
 
         key = Utility.swapArrayElements(key, keyPermutationTable);
-        byte[] newKey = key;
+
+        this.subKeys = generateSubKeys(key);
+        if(decrypt){
+            Collections.reverse(this.subKeys);
+        }
 
         for (int round = 0; round < 16; round++) {
-            newKey = keyTransformation(newKey, round, decrypt);
-
-            byte[] compressedKey = KeyCompression(newKey);
-
-            byte[] fFunctionResult = FFunction.fun(rigthSide, compressedKey);
+            byte[] fFunctionResult = FFunction.fun(rigthSide, subKeys.get(round));
 
             temp = leftSide;
             leftSide = rigthSide;
@@ -68,32 +93,6 @@ public class Des {
 
         return finalPermutation(catArrays);
     }
-
-    // round methods
-    public static byte[] keyTransformation(byte[] key, int round, boolean decrypt){
-        int shift;
-
-        if(decrypt){
-            shift = keyShiftTable[15-round];
-
-        }
-        else{
-            shift = keyShiftTable[round];
-        }
-
-
-
-        byte[][] splittedKey = Utility.splitArrayInHalf(key);
-        splittedKey[0] = Utility.shiftArray(splittedKey[0], shift);
-        splittedKey[1] = Utility.shiftArray(splittedKey[1], shift);
-
-        byte[] newKey = Utility.catArrays(splittedKey[0], splittedKey[1]);
-        return newKey;
-    }
-
-//    public static byte[] round(byte[] bytes){
-//
-//    }
 
     public static byte[] initialPermutation(byte[] bits){
         return Utility.swapArrayElements(bits, initialPermutationTable);
@@ -110,19 +109,4 @@ public class Des {
     private byte[] finalPermutation(byte[] bits){
         return Utility.swapArrayElements(bits, finalPermutationTable);
     }
-
-    static String arrToStr(byte[] bytes){
-        StringBuilder result = new StringBuilder();
-
-        for (byte b : bytes){
-            if(b == 1){
-                result.append("1");
-            }
-            else{
-                result.append("0");
-            }
-        }
-        return result.toString();
-    }
-
 }
