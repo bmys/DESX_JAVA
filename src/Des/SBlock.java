@@ -71,9 +71,15 @@ public class SBlock {
 
         int row = Utility.toInt(rowBits);
         int col = Utility.toInt(columnBits);
+        int valueFromTable = 0;
+        try{
 
-        int valueFromTable = sBlocks[sBlockNumber][row][col];
-
+            valueFromTable = sBlocks[sBlockNumber][row][col];
+            return Utility.toByteArray(valueFromTable);
+        }
+        catch( ArrayIndexOutOfBoundsException e){
+            e.getMessage();
+        }
         return Utility.toByteArray(valueFromTable);
     }
 

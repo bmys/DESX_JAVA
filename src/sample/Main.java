@@ -9,7 +9,10 @@ import javafx.stage.Stage;
 
 import test.UtilityTest;
 
-import java.util.Arrays;
+import java.io.*;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.util.*;
 
 //extends Application
 public class Main {
@@ -26,10 +29,10 @@ public class Main {
     public static void main(String[] args) {
         Des des = new Des();
         String msg_text = "0010100111011000001000110011011100111100010101100100100111111011";
-        String key_text =  "1101000111010100101000110101110010101010000100011101010010101010";
+        String key_text = "1101000111010100101000110101110010101010000100011101010010101010";
 
-        byte [] msg = strToArr(msg_text);
-        byte [] key = strToArr(key_text);
+        byte[] msg = strToArr(msg_text);
+        byte[] key = strToArr(key_text);
         key = Des.prepareKey(key);
 
         System.out.print("Key: ");
@@ -38,11 +41,11 @@ public class Main {
         System.out.print("Message:   ");
         System.out.println(msg_text);
 
-        byte [] encrypted = des.encrypt(msg, key, false);
+        byte[] encrypted = des.encrypt(msg, key, false);
         System.out.print("Encrypted: ");
         System.out.println(arrToStr(encrypted));
 
-        byte [] decrypted = des.encrypt(encrypted, key, true);
+        byte[] decrypted = des.encrypt(encrypted, key, true);
         System.out.print("Decrypted: ");
         System.out.println(arrToStr(decrypted));
 
@@ -56,21 +59,79 @@ public class Main {
         String realKey = "11010111010010111001010001101001010001001010100110001011";
 
         String xKey_text = "1101000111010100101000110101110010101010000100011101010010101010";
-        byte [] xKey = strToArr(xKey_L + xKey_text + xKey_R);
+        byte[] xKey = strToArr(xKey_L + xKey_text + xKey_R);
 
-        System.out.print("Message:   ");
+        System.out.print("Message:        ");
         System.out.println(msg_text);
 
         encrypted = desx.encrypt(msg, xKey, false);
         System.out.print("Encrypted DesX: ");
         System.out.println(arrToStr(encrypted));
 
-        byte [] xKey2 = strToArr(xKey_R + xKey_text + xKey_L);
+        byte[] xKey2 = strToArr(xKey_R + xKey_text + xKey_L);
 
 
         decrypted = desx.encrypt(encrypted, xKey, true);
         System.out.print("Decrypted DesX: ");
         System.out.println(arrToStr(decrypted));
+
+        fileUtils.encrypt("/home/arch/IdeaProjects/crypto/src/test/g.bmp", "/home/arch/IdeaProjects/crypto/src/test/g.bmp.crypted",
+                xKey, false);
+        fileUtils.encrypt("/home/arch/IdeaProjects/crypto/src/test/g.bmp.crypted", "/home/arch/IdeaProjects/crypto/src/test/nowe.bmp",
+                xKey, true);
+
+//        for (byte[] f: readFileToBytes("/home/arch/IdeaProjects/crypto/src/test/tajny.txt")){
+//            System.out.println(arrToStr(f));
+//        }
+
+//        try (FileOutputStream fos = new FileOutputStream("/home/arch/IdeaProjects/crypto/src/test/crypt.bmp")) {
+//            for (byte[] f: readFileToBytes("/home/arch/IdeaProjects/crypto/src/test/g.bmp")){
+////                System.out.println(arrToStr(f));
+//                fos.write(f);
+//
+//            }
+
+
+        //fos.close(); There is no more need for this line since you had created the instance of "fos" inside the try. And this will automatically close the OutputStream
+
+
+//        catch (FileNotFoundException e) {
+//            e.printStackTrace();
+//        }
+//        catch (IOException e) {
+//            e.printStackTrace();
+//        }
+
+
+//    end main
+
+    }
+
+    public static List<byte[]> readFileToBytes(String path){
+        List<byte[]> result = new LinkedList<>();
+
+        try {
+            byte[] array = Files.readAllBytes(new File(path).toPath());
+            StringBuilder file = new StringBuilder();
+            for(byte bt: array){
+                file.append(Integer.toBinaryString(bt));
+            }
+            String output = file.toString();
+            int len = output.length();
+            int padd = 64 - (len % 64);
+
+//            for (int i = 0; i < padd; i++) {
+//                output += '0';
+//            }
+
+            for (String o: splitStringBySize(output, 64)){
+                result.add(strToArr(o));
+            }
+            return result;
+        }
+        catch (IOException e) { e.printStackTrace(); }
+
+        return result;
     }
 
     public static void printArr(byte[]arr){
@@ -136,5 +197,13 @@ public class Main {
             // binary.append(' ');
         }
         return binary.toString();
+    }
+
+    private static Collection<String> splitStringBySize(String str, int size) {
+        ArrayList<String> split = new ArrayList<>();
+        for (int i = 0; i <= str.length() / size; i++) {
+            split.add(str.substring(i * size, Math.min((i + 1) * size, str.length())));
+        }
+        return split;
     }
 }
