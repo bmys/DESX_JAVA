@@ -64,6 +64,10 @@ public class Des {
         return subKeys;
     }
 
+    public static byte[] prepareKey(byte[] key){
+        return Utility.swapArrayElements(key, keyPermutationTable);
+    }
+
     public byte[] encrypt(byte[] bits, byte[] key, boolean decrypt){
 
         byte[] cipher = Utility.swapArrayElements(bits, initialPermutationTable);
@@ -73,8 +77,6 @@ public class Des {
         byte[] leftSide = spltArr[0];
         byte[] rigthSide = spltArr[1];
         byte[] temp;
-
-        key = Utility.swapArrayElements(key, keyPermutationTable);
 
         this.subKeys = generateSubKeys(key);
         if(decrypt){

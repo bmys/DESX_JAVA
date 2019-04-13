@@ -1,9 +1,6 @@
 package sample;
 
-import Des.DesX;
-import Des.FFunction;
-import Des.SBlock;
-import Des.Utility;
+import Des.*;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -27,12 +24,15 @@ public class Main {
 
 
     public static void main(String[] args) {
-        Des.Des des = new Des.Des();
+        Des des = new Des();
         String msg_text = "0010100111011000001000110011011100111100010101100100100111111011";
         String key_text =  "1101000111010100101000110101110010101010000100011101010010101010";
 
         byte [] msg = strToArr(msg_text);
         byte [] key = strToArr(key_text);
+        key = Des.prepareKey(key);
+        System.out.print("Key: ");
+        System.out.println(arrToStr(key));
 
         System.out.print("Message:   ");
         System.out.println(msg_text);
@@ -43,6 +43,32 @@ public class Main {
 
         byte [] decrypted = des.encrypt(encrypted, key, true);
         System.out.print("Decrypted: ");
+        System.out.println(arrToStr(decrypted));
+
+        System.out.println(System.lineSeparator());
+
+//        DES-X
+        DesX desx = new DesX();
+
+        String xKey_L = "1111111111011000111011111101101110100101100110101000100110000000";
+        String xKey_R = "0101001111110100011110111101001001110111010001000110100100001110";
+        String realKey = "11010111010010111001010001101001010001001010100110001011";
+
+        String xKey_text = "1101000111010100101000110101110010101010000100011101010010101010";
+        byte [] xKey = strToArr(xKey_L + xKey_text + xKey_R);
+
+        System.out.print("Message:   ");
+        System.out.println(msg_text);
+
+        encrypted = desx.encrypt(msg, xKey, false);
+        System.out.print("Encrypted DesX: ");
+        System.out.println(arrToStr(encrypted));
+
+        byte [] xKey2 = strToArr(xKey_R + xKey_text + xKey_L);
+
+
+        decrypted = desx.encrypt(encrypted, xKey2, true);
+        System.out.print("Decrypted DesX: ");
         System.out.println(arrToStr(decrypted));
     }
 
