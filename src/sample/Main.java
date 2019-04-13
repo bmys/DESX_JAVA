@@ -75,36 +75,10 @@ public class Main {
         System.out.print("Decrypted DesX: ");
         System.out.println(arrToStr(decrypted));
 
-        fileUtils.encrypt("/home/arch/IdeaProjects/crypto/src/test/g.bmp", "/home/arch/IdeaProjects/crypto/src/test/g.bmp.crypted",
-                xKey, false);
+//        fileUtils.encrypt("/home/arch/IdeaProjects/crypto/src/test/g.bmp", "/home/arch/IdeaProjects/crypto/src/test/g.bmp.crypted",
+//                xKey, false);
         fileUtils.encrypt("/home/arch/IdeaProjects/crypto/src/test/g.bmp.crypted", "/home/arch/IdeaProjects/crypto/src/test/nowe.bmp",
                 xKey, true);
-
-//        for (byte[] f: readFileToBytes("/home/arch/IdeaProjects/crypto/src/test/tajny.txt")){
-//            System.out.println(arrToStr(f));
-//        }
-
-//        try (FileOutputStream fos = new FileOutputStream("/home/arch/IdeaProjects/crypto/src/test/crypt.bmp")) {
-//            for (byte[] f: readFileToBytes("/home/arch/IdeaProjects/crypto/src/test/g.bmp")){
-////                System.out.println(arrToStr(f));
-//                fos.write(f);
-//
-//            }
-
-
-        //fos.close(); There is no more need for this line since you had created the instance of "fos" inside the try. And this will automatically close the OutputStream
-
-
-//        catch (FileNotFoundException e) {
-//            e.printStackTrace();
-//        }
-//        catch (IOException e) {
-//            e.printStackTrace();
-//        }
-
-
-//    end main
-
     }
 
     public static List<byte[]> readFileToBytes(String path){

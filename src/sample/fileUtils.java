@@ -20,18 +20,20 @@ public class fileUtils {
             // + (int)padd
             byte[] bytes = new byte[(int) length + (int)padd];
 
-            for (int i = 0; i < padd; i++) {
-                bytes[(int) length + i] = 0;
-            }
+
 
             insputStream.read(bytes);
             insputStream.close();
+
+            for (int i = 0; i < padd; i++) {
+                bytes[(int) length + i] = 0;
+            }
 
             try (FileOutputStream fos = new FileOutputStream(outPath)) {
                 DesX desx = new DesX();
 
                 for (int i = 0; i < bytes.length / 64; i++) {
-                    System.out.println(i);
+//                    System.out.println(i);
                     byte[] chunk = new byte[64];
                     System.arraycopy(bytes, i*64, chunk, 0, 64);
                     chunk = desx.encrypt(chunk, key, encrypt);
@@ -39,8 +41,6 @@ public class fileUtils {
                         fos.write(f);
                     }
                 }
-
-
             }
 
         } catch (FileNotFoundException e) {
