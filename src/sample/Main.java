@@ -31,6 +31,7 @@ public class Main {
         byte [] msg = strToArr(msg_text);
         byte [] key = strToArr(key_text);
         key = Des.prepareKey(key);
+
         System.out.print("Key: ");
         System.out.println(arrToStr(key));
 
@@ -67,7 +68,7 @@ public class Main {
         byte [] xKey2 = strToArr(xKey_R + xKey_text + xKey_L);
 
 
-        decrypted = desx.encrypt(encrypted, xKey2, true);
+        decrypted = desx.encrypt(encrypted, xKey, true);
         System.out.print("Decrypted DesX: ");
         System.out.println(arrToStr(decrypted));
     }
