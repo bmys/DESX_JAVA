@@ -41,8 +41,6 @@ public class Des {
     // public methods
     public byte[] encrypt(byte[] bits, byte[] key, boolean decrypt){
 
-        //key = Utility.prepareKey(key);
-
         byte[] cipher = Utility.swapArrayElements(bits, initialPermutationTable);
 
         byte[][] spltArr = Utility.splitArrayInHalf(cipher);
@@ -53,7 +51,8 @@ public class Des {
 
         key = Utility.swapArrayElements(key, keyPermutationTable);
         byte[] newKey = key;
-        for (int round = 0; round < 1; round++) {
+
+        for (int round = 0; round < 16; round++) {
             newKey = keyTransformation(newKey, round, decrypt);
 
             byte[] compressedKey = KeyCompression(newKey);
@@ -63,12 +62,11 @@ public class Des {
             temp = leftSide;
             leftSide = rigthSide;
             rigthSide = Utility.xorArrays(fFunctionResult, temp);
-        }
+            }
 
-        byte[] catArrays = Utility.catArrays(leftSide, rigthSide);
+        byte[] catArrays = Utility.catArrays(rigthSide, leftSide);
 
-        return catArrays;
-//        return finalPermutation(catArrays);
+        return finalPermutation(catArrays);
     }
 
     // round methods
@@ -111,6 +109,20 @@ public class Des {
 
     private byte[] finalPermutation(byte[] bits){
         return Utility.swapArrayElements(bits, finalPermutationTable);
+    }
+
+    static String arrToStr(byte[] bytes){
+        StringBuilder result = new StringBuilder();
+
+        for (byte b : bytes){
+            if(b == 1){
+                result.append("1");
+            }
+            else{
+                result.append("0");
+            }
+        }
+        return result.toString();
     }
 
 }
